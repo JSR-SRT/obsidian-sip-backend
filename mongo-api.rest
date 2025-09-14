@@ -1,0 +1,50 @@
+### User route - Register a new user
+POST http://localhost:3030/auth/register
+Content-Type: application/json
+
+{
+  "firstname": "test2",
+  "lastname": "test2",
+  "email": "test2@example.com",
+  "phone": "0811111111",
+  "username": "test2",
+  "password": "SecurePassword@123"
+
+}
+
+### User route - Login
+POST http://localhost:3030/auth/cookie/login
+Content-Type: application/json
+
+{
+  "username": "da",
+  "password": "SecurePassword@123"
+}
+
+### User route - Get User Profile
+GET http://localhost:3030/auth/profile
+Cookie: accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4YzE1NTc5MmFjM2ZjNGIxNWQ2Zjc0YiIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzU3NTAwNzkzLCJleHAiOjE3NjAwOTI3OTN9.c6aRkzTMLLcOsYgYlqag5mHBdN3n93vM2McIbpLsCmg
+
+
+
+### Test route - Verify the token (replace <TOKEN> with the token from the login response)
+GET http://localhost:3030/auth/verify
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4YzE1NTc5MmFjM2ZjNGIxNWQ2Zjc0YiIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzU3NTAwNzkzLCJleHAiOjE3NjAwOTI3OTN9.c6aRkzTMLLcOsYgYlqag5mHBdN3n93vM2McIbpLsCmg
+
+
+
+GET http://localhost:3030/auth/me
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4YzE1NTc5MmFjM2ZjNGIxNWQ2Zjc0YiIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzU3NTAwNzkzLCJleHAiOjE3NjAwOTI3OTN9.c6aRkzTMLLcOsYgYlqag5mHBdN3n93vM2McIbpLsCmg
+Content-Type: application/json
+
+
+
+### User route - Logout user
+POST http://localhost:3030/auth/logout
+
+
+### Admin User Route - Get all users
+GET http://localhost:3030/users
+
+
+
