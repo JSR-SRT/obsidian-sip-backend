@@ -65,7 +65,8 @@ Content-Type: application/json
 ### Order Route - Create Order
 POST http://localhost:3030/orders
 Content-Type: application/json
-Cookie: accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OGMzOGUwOTk5YWRlZWFlNjBjOGJmNzIiLCJpYXQiOjE3NTc4NDUwODksImV4cCI6MTc1Nzg0ODY4OX0.RM7RiETFTMrRdIh8ioJJd4YP2C2M9q5FiwTwHFfJm64
+Cookie: accessToken=
+
 
 {
   "orderNumber": "ORD-20250914-001",
@@ -102,8 +103,8 @@ Cookie: accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OGMzOGU
 
 ### Order Route - GET → all orders ของ user
 GET http://localhost:3030/orders
-Cookie: accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OGMzOGUwOTk5YWRlZWFlNjBjOGJmNzIiLCJpYXQiOjE3NTc4NDk0MzYsImV4cCI6MTc1Nzg1MzAzNn0.wTzxt9jf3iloYvkKhJi4pn6K4TkBMfRtwL_tIw7Ptv0
+Cookie: accessToken=
 
 ### Order Route - GET Single Order
 GET http://localhost:3030/orders/68c697f4abb648bf9521ada7
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OGMzOGUwOTk5YWRlZWFlNjBjOGJmNzIiLCJpYXQiOjE3NTc4NDUwODksImV4cCI6MTc1Nzg0ODY4OX0.RM7RiETFTMrRdIh8ioJJd4YP2C2M9q5FiwTwHFfJm64
+Authorization: Bearer 

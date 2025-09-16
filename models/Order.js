@@ -23,7 +23,7 @@ const OrderSchema = new Schema(
         // 'productId' คือ ID ของสินค้าในตะกร้า
         // 'mongoose.Schema.Types.ObjectId' หมายถึงเป็นค่าที่เป็น ObjectId ของ MongoDB
         // 'ref: "products"' หมายถึงอ้างอิงไปที่ collection 'products'
-        productId: { type: mongoose.Schema.Types.ObjectId, ref: "products", required: true }, 
+        productId: { type: mongoose.Schema.Types.ObjectId, ref: "products"}, 
         // เก็บ snapshot ของชื่อสินค้า ณ เวลาที่สั่งซื้อ เพื่อไม่ให้ข้อมูลเปลี่ยนไปถ้าภายหลังชื่อสินค้าใน collection 'products' ถูกแก้ไข
         name: { type: String, required: true },
         // 'price' คือราคาต่อหน่วย (ต้องมี) เก็บ snapshot ของราคา เพื่อไม่ให้ข้อมูลเปลี่ยนไปถ้าหากว่าภายหลังราคาสินค้าถูกแก้ไข
@@ -50,21 +50,14 @@ const OrderSchema = new Schema(
     total: { type: Number, required: true },
     // 'note' คือข้อความเพิ่มเติมจากลูกค้า set default: "" คือมีค่าเริ่มต้นเป็นข้อความว่าง
     note: { type: String, default: "" },
-
-    status: {
-      type: String,
-      enum: ["preparing", "processing", "shipped", "delivered"],
-      // 'default: "preparing"' คือสถานะเริ่มต้นเมื่อสร้างคำสั่งซื้อ
-      default: "preparing",
-    },
+    
 
     // 'user' คือ ID ของผู้ใช้ที่ทำการสั่งซื้อ
     // 'Schema.Types.ObjectId' หมายถึงเป็นค่าที่เป็น ObjectId ของ MongoDB
     // 'ref: "User"' หมายถึงอ้างอิงไปที่ collection 'users'
     user: {
       type: Schema.Types.ObjectId,
-      ref: "User",
-      required: true,
+      ref: "User"
     },
   },
   // { timestamps: true } คือการบอก Mongoose ให้สร้างฟิลด์ 'createdAt' และ 'updatedAt' ให้ auto

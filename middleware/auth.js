@@ -3,7 +3,12 @@ import jwt from "jsonwebtoken";
 export const authUser = async (req, res, next) => {
   const token = req.cookies?.accessToken;
   if (!token) {
-    return res.status(401).json({ success: false, message: "Access denied. No token." });
+    return res
+      .status(401)
+      .json({
+        success: false,
+        message: "Kindly log in to continue with your order. ☕",
+      });
   }
   try {
     const decoded_token = jwt.verify(token, process.env.JWT_SECRET);
