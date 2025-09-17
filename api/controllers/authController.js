@@ -54,7 +54,7 @@ export const createAccount = async (req, res) => {
       { id: user._id, role: user.role },
       process.env.JWT_SECRET,
       {
-        expiresIn: "30d",
+        expiresIn: "1h",
       }
     );
 
@@ -72,44 +72,6 @@ export const createAccount = async (req, res) => {
     });
   }
 };
-
-// export const login = async (req, res) => {
-//   const { username, password, remember } = req.body;
-
-//   if (!username || !password) {
-//     return res
-//       .status(400)
-//       .json({ error: true, message: "Username and password are required" });
-//   }
-
-//   try {
-//     const user = await User.findOne({ username });
-//     if (!user) {
-//       return res
-//         .status(401)
-//         .json({ error: true, message: "User not found" });
-//     }
-
-//     const isMatch = await bcrypt.compare(password, user.password);
-//     if (!isMatch) {
-//       return res
-//         .status(401)
-//         .json({ error: true, message: "Invalid password" });
-//     }
-
-//     const expiresIn = remember ? JWT_EXPIRES_SHORT : JWT_EXPIRES_LONG;
-
-//     const token = jwt.sign({ userId: user._id, username: user.username },
-//       process.env.JWT_SECRET,
-//       {expiresIn}
-//     );
-//     res.json({ error: false, token, message: "Login successful" });
-//   } catch (err) {
-//     res
-//       .status(500)
-//       .json({ error: true, message: "Server error", details: err.message });
-//   }
-// };
 
 export const login = async (req, res) => {
   const { username, password, remember } = req.body;
@@ -184,13 +146,6 @@ export const login = async (req, res) => {
   }
 };
 
-export const authMiddleware = async (req, res) => {
-  if (!req.user) {
-    return res.status(401).json({ error: "Not authenticated" });
-  }
-  res.json({ user: req.user });
-};
-
 export const profile = async (req, res) => {
   const user = await User.findById(req.user._id).select("-password"); // exclude password
   if (!user) {
@@ -205,23 +160,78 @@ export const logout = async (req, res) => {
     secure: process.env.NODE_ENV === "production",
     sameSite: "Strict",
   });
+
+  res.clearCookie("refreshToken", {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "strict",
+  });
   res.status(200).json({ message: "Logged out successfully" });
 };
 
-export const verify = async (req, res) => {
-  const token = req.headers.authorization?.split(" ")[1];
-  if (!token) {
-    return res.status(401).json({ error: true, message: "Token is required" });
-  }
+// export const login = async (req, res) => {
+//   const { username, password, remember } = req.body;
 
-  try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    res.json({
-      error: false,
-      userId: decoded.userId,
-      message: "Token is valid",
-    });
-  } catch (err) {
-    res.status(401).json({ error: true, message: "Invalid token" });
-  }
-};
+//   if (!username || !password) {
+//     return res
+//       .status(400)
+//       .json({ error: true, message: "Username and password are required" });
+//   }
+
+//   try {
+//     const user = await User.findOne({ username });
+//     if (!user) {
+//       return res
+//         .status(401)
+//         .json({ error: true, message: "User not found" });
+//     }
+
+//     const isMatch = await bcrypt.compare(password, user.password);
+//     if (!isMatch) {
+//       return res
+//         .status(401)
+//         .json({ error: true, message: "Invalid password" });
+//     }
+
+//     const expiresIn = remember ? JWT_EXPIRES_SHORT : JWT_EXPIRES_LONG;
+
+//     const token = jwt.sign({ userId: user._id, username: user.username },
+//       process.env.JWT_SECRET,
+//       {expiresIn}
+//     );
+//     res.json({ error: false, token, message: "Login successful" });
+//   } catch (err) {
+//     res
+//       .status(500)
+//       .json({ error: true, message: "Server error", details: err.message });
+//   }
+// };
+
+
+
+// export const authMiddleware = async (req, res) => {
+//   if (!req.user) {
+//     return res.status(401).json({ error: "Not authenticated" });
+//   }
+//   res.json({ user: req.user });
+// };
+
+
+
+// export const verify = async (req, res) => {
+//   const token = req.headers.authorization?.split(" ")[1];
+//   if (!token) {
+//     return res.status(401).json({ error: true, message: "Token is required" });
+//   }
+
+//   try {
+//     const decoded = jwt.verify(token, process.env.JWT_SECRET);
+//     res.json({
+//       error: false,
+//       userId: decoded.userId,
+//       message: "Token is valid",
+//     });
+//   } catch (err) {
+//     res.status(401).json({ error: true, message: "Invalid token" });
+//   }
+// };

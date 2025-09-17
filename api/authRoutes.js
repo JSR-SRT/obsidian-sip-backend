@@ -1,5 +1,5 @@
 import express from "express";
-import { authMiddleware, createAccount, login, logout, profile, verify } from "./controllers/authController.js";
+import { createAccount, login, logout, profile } from "./controllers/authController.js";
 import { authUser } from "../middleware/auth.js";
 import { refreshToken } from "./controllers/refreshTokenController.js";
 import { getAuthStatus } from "./controllers/authStatusController.js";
@@ -18,9 +18,8 @@ router.post("/logout", logout);
 
 router.get("/profile", authUser, profile);
 
-// Verify token
-router.get("/verify", verify);
+router.get("/me", authUser);
 
-router.get("/me", authUser, authMiddleware);
+// router.get("/verify", verify);
 
 export default router;

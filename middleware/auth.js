@@ -7,7 +7,7 @@ export const authUser = async (req, res, next) => {
       .status(401)
       .json({
         success: false,
-        message: "Kindly log in to continue with your order. ☕",
+        message: "Kindly login to continue with your order. ☕",
       });
   }
   try {
