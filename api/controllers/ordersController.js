@@ -20,7 +20,9 @@ export const createOrder = async (req, res) => {
     // (ตรวจสอบความปลอดภัย) เช็คว่ามีข้อมูลผู้ใช้จาก middleware authUser หรือไม่
     // ถ้าไม่มี แสดงว่าไม่ได้ login ให้ส่งสถานะ 401 และข้อความ error
     if (!req.user?._id) {
-      return res.status(401).json({ error: true, message: "Not authenticated" });
+      return res
+        .status(401)
+        .json({ error: true, message: "Not authenticated" });
     }
     // ดึง userId จาก req.user ที่มาจาก middleware
     const userId = req.user._id;
@@ -42,9 +44,9 @@ export const createOrder = async (req, res) => {
       !customerInfo || // ต้องมีข้อมูลลูกค้า
       !Array.isArray(basketItems) || // basketItems ต้องเป็น Array
       basketItems.length === 0 || // basketItems ต้องไม่เป็น Array ว่าง
-      !orderType ||  // ต้องมีประเภทการสั่งซื้อ
+      !orderType || // ต้องมีประเภทการสั่งซื้อ
       subtotal == null || // subtotal ต้องมีค่า (ไม่เป็น null หรือ undefined)
-      total == null  // total ต้องมีค่า (ไม่เป็น null หรือ undefined)
+      total == null // total ต้องมีค่า (ไม่เป็น null หรือ undefined)
     ) {
       // ถ้าข้อมูลไม่ครบ ให้ส่งสถานะ 400 (Bad Request) และข้อความ error
       return res.status(400).json({
@@ -78,7 +80,7 @@ export const createOrder = async (req, res) => {
       // ถ้า orderType เป็น "delivery" ให้ใช้ address ที่ส่งมา ถ้าไม่ใช่ ให้เป็นค่า "N/A"
       address: orderType === "delivery" ? address : "N/A",
       subtotal,
-       // ถ้า orderType เป็น "delivery" ให้ใช้ deliveryFee ที่ส่งมา ถ้าไม่ใช่ ให้เป็นต่า 0
+      // ถ้า orderType เป็น "delivery" ให้ใช้ deliveryFee ที่ส่งมา ถ้าไม่ใช่ ให้เป็นต่า 0
       deliveryFee: orderType === "delivery" ? deliveryFee : 0,
       total,
       note,
@@ -100,7 +102,7 @@ export const createOrder = async (req, res) => {
     // ส่งสถานะ 500 (Server Error) พร้อมข้อความ error กลับไป
     res.status(500).json({
       error: true,
-      message: "Server error, failed to create order.",
+      message: "Kindly 🤍 login to continue with your order.",
       details: err.message,
     });
   }
@@ -113,7 +115,9 @@ export const getUserOrders = async (req, res) => {
     // (ตรวจสอบความปลอดภัย) เช็คว่ามีข้อมูลผู้ใช้จาก middleware หรือไม่
     if (!req.user?._id) {
       // ถ้าไม่มี แสดงว่าไม่ได้ login ให้ส่งสถานะ 401 และข้อความ error
-      return res.status(401).json({ error: true, message: "Not authenticated" });
+      return res
+        .status(401)
+        .json({ error: true, message: "Not authenticated" });
     }
     // ดึง userId จาก req.user
     const userId = req.user._id;
@@ -144,11 +148,13 @@ export const getOrderById = async (req, res) => {
     // (ตรวจสอบความปลอดภัย) เช็คว่ามีข้อมูลผู้ใช้จาก middleware หรือไม่
     if (!req.user?._id) {
       // ถ้าไม่มี แสดงว่าไม่ได้ login ให้ส่งสถานะ 401 และข้อความ error
-      return res.status(401).json({ error: true, message: "Not authenticated" });
+      return res
+        .status(401)
+        .json({ error: true, message: "Not authenticated" });
     }
     // ดึง orderId จาก params ใน URL
     const { orderId } = req.params;
-     // ดึง userId จาก req.user
+    // ดึง userId จาก req.user
     const userId = req.user._id;
 
     // ค้นหาข้อมูล order ใน database ที่ _id และ user ID ตรงกัน เพื่อป้องกันไม่ให้ user ดู order ของคนอื่นได้
