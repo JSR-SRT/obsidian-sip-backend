@@ -39,7 +39,6 @@ const PORT = process.env.PORT || 4444;
 
 (async () => {
   try {
-    console.log(process.env)
     await connectMongo();
     app.listen(PORT, "0.0.0.0", () => {
       console.log(`🚀 Server running on port ${PORT}`);
